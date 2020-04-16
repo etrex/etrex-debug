@@ -1,0 +1,29 @@
+<h3>request 反射</h3>
+<div>
+  將 request 送到 <%= link_to create_url, create_url %>， 就可以在下方的列表看到送出了什麼 request 過去。
+</div>
+
+
+<hr />
+<%= link_to "清除全部", delete_path %>
+
+<hr />
+<br />
+<h3>收到的 request 列表</h3>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th> refferrer </th>
+      <th> created_at </th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @collection.each do |model| %>
+    <tr>
+      <td><%= link_to model.url, http_request_url(model) %></td>
+      <td><%= model.created_at %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

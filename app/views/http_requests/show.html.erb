@@ -1,0 +1,19 @@
+<%= link_to "回首頁", root_url %>
+
+<h4>url</h4>
+<span><%= @model.url %></span>
+
+<h4>ip</h4>
+<span><%= @model.ip %></span>
+
+<h4>method</h4>
+<span><%= @model.method %></span>
+
+<h4>params</h4>
+<span><%= render partial: 'shared/hash', locals: {model: @model.params} %></span>
+
+<h4>headers</h4>
+<span><%= render partial: 'shared/hash', locals: {model: @model.headers} %></span>
+
+<h4>body</h4>
+<span><%= @model.body %></span>
