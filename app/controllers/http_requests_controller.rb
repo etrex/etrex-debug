@@ -2,7 +2,7 @@ class HttpRequestsController < ApplicationController
   protect_from_forgery with: :null_session
 
   def index
-    @collection = HttpRequest.all.order(id: :desc)
+    @collection = HttpRequest.order(id: :desc).first(100)
   end
 
   def show
