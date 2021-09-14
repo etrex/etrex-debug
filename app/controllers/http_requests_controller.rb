@@ -19,7 +19,7 @@ class HttpRequestsController < ApplicationController
       ip: request.remote_ip
     })
 
-    if HttpRequest.count > 10
+    if HttpRequest.count > 100
       HttpRequest.order(:id).first.destroy
     end
     render :show
