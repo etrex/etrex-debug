@@ -17,5 +17,6 @@ module EtrexDebug2
     # the framework and any gems in your application.
 
     config.hosts << "ngrok.etrex.tw"
+    config.hosts << "etrex-debug.herokuapp.com"
   end
 end
