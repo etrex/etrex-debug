@@ -38,7 +38,8 @@ class HttpRequestsController < ApplicationController
   end
 
   def get_body
-    return request.body.read if request.body.respond_to?(:read)
-    request.body
+    body = request.body.read if request.body.respond_to?(:read)
+    body ||= request.body
+    body.force_encoding('UTF-8')
   end
 end
