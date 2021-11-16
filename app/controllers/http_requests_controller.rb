@@ -19,9 +19,7 @@ class HttpRequestsController < ApplicationController
       ip: request.remote_ip
     })
 
-    if HttpRequest.count > 100
-      HttpRequest.order(:id).first.destroy
-    end
+    HttpRequest.order(id: :desc).offset(100).delete_all
     render :show
   end
 
@@ -40,6 +38,6 @@ class HttpRequestsController < ApplicationController
   def get_body
     body = request.body.read if request.body.respond_to?(:read)
     body ||= request.body
-    body.force_encoding('UTF-8')
+    body.dup.force_encoding('UTF-8')
   end
 end
