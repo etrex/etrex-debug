@@ -10,6 +10,9 @@ class HttpRequestsController < ApplicationController
   end
 
   def create
+    # 當 params['hub.challenge'] 有值時，表示 Facebook 驗證 webhook，直接回傳 challenge
+    return render plain: params['hub.challenge'] if params['hub.challenge'].present?
+
     @model = HttpRequest.create({
       url: request.referrer || "(direct)",
       method: request.method,
