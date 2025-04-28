@@ -1,0 +1,13 @@
+<%# 用於顯示格式化的 JSON 資料 %>
+<div class="json-viewer">
+  <% if data.is_a?(Hash) || data.is_a?(Array) %>
+    <% begin %>
+      <% formatted_json = JSON.pretty_generate(data) %>
+      <pre class="code-block"><code class="language-json"><%= formatted_json %></code></pre>
+    <% rescue JSON::GeneratorError %>
+      <%= data.to_s %>
+    <% end %>
+  <% else %>
+    <%= data.to_s %>
+  <% end %>
+</div>

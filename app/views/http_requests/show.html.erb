@@ -1,19 +1,73 @@
-<%= link_to "回首頁", root_url %>
+<div class="container mt-4">
+  <%= link_to root_url, class: 'btn btn-outline-primary mb-4' do %>
+    <i class="fas fa-arrow-left"></i> 回首頁
+  <% end %>
 
-<h4>url</h4>
-<span><%= @model.url %></span>
+  <div class="card mb-4">
+    <div class="card-header">
+      <div class="d-flex align-items-center">
+        <span class="badge badge-<%= method_color(@model.method) %> mr-2">
+          <%= @model.method %>
+        </span>
+        <h4 class="mb-0 flex-grow-1"><%= URI(@model.url).path %></h4>
+        <small class="text-muted" title="<%= @model.created_at %>">
+          <%= time_ago_in_words(@model.created_at) %>前
+        </small>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="row mb-3">
+        <div class="col-md-8">
+          <div class="input-group">
+            <input type="text" class="form-control" value="<%= @model.url %>" readonly>
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" type="button" onclick="navigator.clipboard.writeText('<%= @model.url %>')">Copy</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="text-muted">
+            <strong>IP:</strong> <%= @model.ip %>
+          </div>
+        </div>
+      </div>
 
-<h4>ip</h4>
-<span><%= @model.ip %></span>
+      <div class="mt-4">
+        <h5>Headers</h5>
+        <%= render partial: 'shared/json_viewer', locals: { data: @model.headers } %>
+      </div>
 
-<h4>method</h4>
-<span><%= @model.method %></span>
+      <div class="mt-4">
+        <h5>Parameters</h5>
+        <%= render partial: 'shared/json_viewer', locals: { data: @model.params } %>
+      </div>
 
-<h4>params</h4>
-<span><%= render partial: 'shared/hash', locals: {model: @model.params} %></span>
+      <div class="mt-4">
+        <h5>Body</h5>
+        <% if @model.body.present? %>
+          <% begin %>
+            <% parsed_body = JSON.parse(@model.body) %>
+            <%= render partial: 'shared/json_viewer', locals: { data: parsed_body } %>
+          <% rescue JSON::ParserError %>
+            <pre class="code-block"><code><%= @model.body %></code></pre>
+          <% end %>
+        <% else %>
+          <p class="text-muted">No body content</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
 
-<h4>headers</h4>
-<span><%= render partial: 'shared/hash', locals: {model: @model.headers} %></span>
-
-<h4>body</h4>
-<span><%= @model.body %></span>
+<%# Add this to your application layout if not already present %>
+<% content_for :head do %>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+      document.querySelectorAll('pre code').forEach((el) => {
+        hljs.highlightElement(el);
+      });
+    });
+  </script>
+<% end %>

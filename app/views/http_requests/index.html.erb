@@ -1,28 +1,56 @@
-<h3>request 反射</h3>
-<div>
-  將 request 送到 <%= link_to root_url, root_url %> domain 下的任何網址， 就可以在下方的列表看到送出了什麼 request 過去。
+<div class="container mt-4">
+  <div class="card mb-4">
+    <div class="card-body">
+      <h3 class="card-title">Request 反射工具</h3>
+      <p class="card-text">
+        將 request 送到 <%= link_to root_url, root_url %> domain 下的任何網址，
+        就可以在下方的列表看到送出了什麼 request 過去。
+      </p>
+      <%= link_to delete_path, class: 'btn btn-outline-danger', data: { confirm: '確定要清除所有記錄嗎？' } do %>
+        <i class="fas fa-trash"></i> 清除全部
+      <% end %>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h3 class="mb-0">收到的 Request 列表</h3>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead class="thead-light">
+            <tr>
+              <th>Method</th>
+              <th>Path</th>
+
+              <th>IP</th>
+              <th>Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @collection.each do |model| %>
+              <tr>
+                <td>
+                  <span class="badge badge-<%= method_color(model.method) %>">
+                    <%= model.method %>
+                  </span>
+                </td>
+                <td>
+                  <%= link_to http_request_url(model), class: 'text-decoration-none' do %>
+                    <div class="text-truncate" style="max-width: 300px;" title="<%= model.url %>">
+                      <%= URI(model.url).path %>
+                    </div>
+                  <% end %>
+                </td>
+
+                <td><%= model.ip %></td>
+                <td title="<%= model.created_at %>"><%= time_ago_in_words(model.created_at) %>前</td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>
-
-<hr />
-<%= link_to "清除全部", delete_path %>
-
-<hr />
-<br />
-<h3>收到的 request 列表</h3>
-
-<table class="table">
-  <thead>
-    <tr>
-      <th> refferrer </th>
-      <th> created_at </th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @collection.each do |model| %>
-    <tr>
-      <td><%= link_to model.url, http_request_url(model) %></td>
-      <td><%= model.created_at %></td>
-    </tr>
-    <% end %>
-  </tbody>
-</table>
