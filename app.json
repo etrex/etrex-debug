@@ -1,0 +1,31 @@
+{
+  "name": "HTTP Request Debug Tool",
+  "description": "一個用來擷取和檢視 HTTP 請求的工具",
+  "repository": "https://github.com/etrex/etrex-debug",
+  "logo": "https://raw.githubusercontent.com/etrex/etrex-debug/main/public/icon.png",
+  "keywords": ["ruby", "rails", "http", "debug", "webhook"],
+  "addons": [
+    {
+      "plan": "heroku-postgresql:mini"
+    }
+  ],
+  "env": {
+    "RAILS_ENV": {
+      "description": "Rails 環境設定",
+      "value": "production"
+    },
+    "RAILS_MASTER_KEY": {
+      "description": "Rails 主密鑰，用於加密設定",
+      "required": true
+    }
+  },
+  "buildpacks": [
+    {
+      "url": "heroku/ruby"
+    }
+  ],
+  "scripts": {
+    "postdeploy": "bundle exec rails db:migrate"
+  },
+  "success_url": "/"
+}
