@@ -6,7 +6,7 @@
   "keywords": ["ruby", "rails", "http", "debug", "webhook"],
   "addons": [
     {
-      "plan": "heroku-postgresql:mini"
+      "plan": "heroku-postgresql:essential-0"
     }
   ],
   "env": {

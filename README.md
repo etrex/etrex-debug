@@ -87,8 +87,16 @@ heroku create your-app-name
 
 4. 新增 PostgreSQL 資料庫：
 ```bash
-heroku addons:create heroku-postgresql:mini
+heroku addons:create heroku-postgresql:essential-0
 ```
+
+注意：essential-0 方案有下列限制：
+- 不支援資料庫複製和主從架構
+- 不支援查詢效能監控
+- 每月預期可用性為 99.5%
+- 無預告的維護和自動版本升級
+- 不提供 PostgreSQL 日誌
+- 不支援額外的證證
 
 5. 部署應用：
 ```bash
