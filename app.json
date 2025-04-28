@@ -10,14 +10,7 @@
     }
   ],
   "env": {
-    "RAILS_ENV": {
-      "description": "Rails 環境設定",
-      "value": "production"
-    },
-    "RAILS_MASTER_KEY": {
-      "description": "Rails 主密鑰，用於加密設定",
-      "required": true
-    }
+    "RAILS_ENV": "production"
   },
   "buildpacks": [
     {
@@ -25,7 +18,7 @@
     }
   ],
   "scripts": {
-    "postdeploy": "bundle exec rails db:migrate"
+    "postdeploy": "RAILS_MASTER_KEY=$(cat config/master.key) bundle exec rails db:migrate"
   },
   "success_url": "/"
 }

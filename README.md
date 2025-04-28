@@ -62,6 +62,12 @@ rails server
 
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
+點擊上方按鈕即可一鍵部署至 Heroku。系統會自動：
+- 設定 RAILS_ENV 為 production
+- 從專案中讀取並設定 RAILS_MASTER_KEY
+- 建立並設定 PostgreSQL 資料庫
+- 執行資料庫遷移
+
 ### 手動部署步驟
 
 1. 安裝 Heroku CLI：
